@@ -1,26 +1,23 @@
 import {createStore} from "vuex";
 
 const store = createStore({
-  state() {
-    return {
-      word: '',
-    };
-  },
+  state: () => ({
+    text: ''
+  }),
   mutations: {
-    update(state) {
-      state.word = this.state.value;
+    SET_TEXT(state, payload) {
+      state.text = payload
     },
   },
-  actions: {},
-  getters: {
-    oldValue(state) {
-      return state.word;
+  actions: {
+    setText({ commit }, payload) {
+      localStorage.setItem('text', payload)
+      commit('SET_TEXT', payload)
     },
-    updateValue(state, getters) {
-      const oldValue = getters.oldValue;
-      console.log(state)
-      if (oldValue === '' ) return 1;
-      return oldValue;
+  },
+  getters: {
+    text({ text }) {
+      return text || ''
     },
   }
 });
